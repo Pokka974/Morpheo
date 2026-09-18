@@ -43,6 +43,7 @@ import {
   SymbolIcon,
 } from '@shared/components/icons';
 import { ordinal } from '@shared/ordinal';
+import { emotionLabel } from '@shared/emotionLabel';
 import { DreamImageActionBar } from '@features/media-generation/DreamImageActionBar';
 import { useImageGeneration } from '@features/media-generation/useImageGeneration';
 import { DeleteDreamModal } from '@features/journal/DeleteDreamModal';
@@ -583,7 +584,7 @@ export default function DreamDetailScreen() {
           {headlineEmotions.length ? (
             <ChipRow>
               {headlineEmotions.slice(0, 3).map(emotion => (
-                <Chip key={emotion} label={emotion} />
+                <Chip key={emotion} label={emotionLabel(t, emotion)} />
               ))}
             </ChipRow>
           ) : null}

@@ -577,7 +577,7 @@ export default function DreamLogScreen() {
             onBlur={() => setIsFocused(false)}
             multiline
             textAlignVertical="top"
-            accessibilityLabel="Dream description"
+            accessibilityLabel={t('log.descriptionA11yLabel')}
           />
           <View style={styles.editorFooter}>
             {/*

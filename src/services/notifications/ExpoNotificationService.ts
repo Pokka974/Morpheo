@@ -25,13 +25,13 @@ export class ExpoNotificationService implements NotificationService {
     return status === Notifications.PermissionStatus.GRANTED;
   }
 
-  async scheduleReminder(hour: number, minute: number): Promise<void> {
+  async scheduleReminder(hour: number, minute: number, title: string, body: string): Promise<void> {
     await Notifications.cancelScheduledNotificationAsync(REMINDER_IDENTIFIER).catch(() => {});
     await Notifications.scheduleNotificationAsync({
       identifier: REMINDER_IDENTIFIER,
       content: {
-        title: 'Remember your dreams?',
-        body: 'Log a dream before the details fade.',
+        title,
+        body,
         sound: false,
       },
       trigger: {

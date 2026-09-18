@@ -9,7 +9,8 @@
     "back": "Back",
     "loading": "Loading…",
     "premium": "Premium",
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Scroll to top",
+    "ok": "OK"
   },
   "splash": {
     "tagline": "Dream journal",
@@ -204,6 +205,7 @@
     "title": "New dream",
     "editTitle": "Edit dream",
     "placeholder": "Tell your dream…",
+    "descriptionA11yLabel": "Dream description",
     "saveError": "Could not save the dream.",
     "recording": "Recording",
     "micStart": "Start voice dictation",
@@ -290,7 +292,97 @@
   },
   "onboardingConsent": {
     "privacyPolicyLink": "Privacy Policy",
-    "termsOfServiceLink": "Terms of Service"
+    "termsOfServiceLink": "Terms of Service",
+    "title": "A quick note about privacy",
+    "intro": "To interpret your dreams, Morpheo sends your dream description to Anthropic (Claude). To illustrate them, it sends a short visual description of the dream to Black Forest Labs (FLUX).",
+    "bulletEncrypted": "• Your dream text is sent securely and encrypted in transit, and your dream journal is encrypted at rest on this device.",
+    "neverTrainedPrefix": "• Your dreams are ",
+    "neverTrainedBold": "never used to train AI models",
+    "neverTrainedSuffix": ".",
+    "bulletAdvice": "• Interpretations are symbolic and cultural — not clinical or therapeutic advice.",
+    "bulletRevoke": "• You can revoke consent at any time in Settings.",
+    "agreeButton": "I Agree",
+    "noThanksButton": "No Thanks",
+    "errorTitle": "Error",
+    "saveErrorBody": "Could not save your consent. Please try again or contact support.",
+    "genericErrorBody": "Something went wrong. Please try again.",
+    "requiredAlertTitle": "Consent Required",
+    "requiredAlertBody": "Morpheo needs your consent to send dream descriptions to an AI provider for interpretation. Without this, the app cannot analyze your dreams.\n\nYour dreams are processed securely and are never used to train AI models."
+  },
+  "onboardingWelcome": {
+    "tagline": "Unlock the meaning of your dreams through symbolic interpretation — not therapy.",
+    "getStarted": "Get Started"
+  },
+  "signIn": {
+    "title": "Welcome back",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "submitButton": "Sign In",
+    "submitButtonLoading": "Signing in...",
+    "googleButton": "Continue with Google",
+    "appleButton": "Continue with Apple",
+    "createAccountLink": "Don't have an account? Create one",
+    "genericError": "Sign in failed. Please try again.",
+    "googleError": "Google sign-in failed.",
+    "appleError": "Apple sign-in failed."
+  },
+  "signUp": {
+    "title": "Create your account",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password (min 8 characters)",
+    "confirmPasswordPlaceholder": "Confirm password",
+    "submitButton": "Create Account",
+    "submitButtonLoading": "Creating account...",
+    "passwordMismatchError": "Passwords do not match.",
+    "passwordTooShortError": "Password must be at least 8 characters.",
+    "genericError": "Account creation failed."
+  },
+  "lock": {
+    "title": "Unlock Morpheo",
+    "biometricPrompt": "Unlock your dream journal",
+    "pinPlaceholder": "Enter PIN",
+    "pinA11yLabel": "Enter PIN",
+    "unlockButton": "Unlock",
+    "biometricLink": "Use Face ID / Touch ID",
+    "forgotPinLink": "Forgot PIN?",
+    "incorrectPinError": "Incorrect PIN. Please try again."
+  },
+  "lockSetup": {
+    "title": "Protect your dream journal",
+    "subtitleWithBiometric": "Set a PIN as a backup to Face ID / Touch ID. Your journal is locked each time you leave the app.",
+    "subtitleWithoutBiometric": "Create a PIN to protect your dream journal. Your journal is locked each time you leave the app.",
+    "createPinPlaceholder": "Create PIN (min 4 digits)",
+    "createPinA11yLabel": "Create PIN",
+    "confirmPinPlaceholder": "Confirm PIN",
+    "confirmPinA11yLabel": "Confirm PIN",
+    "submitButton": "Set Up Protection",
+    "pinTooShortAlertTitle": "PIN Too Short",
+    "pinTooShortAlertBody": "Please enter at least 4 digits.",
+    "pinMismatchAlertTitle": "PINs Do Not Match",
+    "pinMismatchAlertBody": "Please make sure both PINs are the same."
+  },
+  "forgotPin": {
+    "verifyTitle": "Verify your identity",
+    "verifySubtitle": "Enter your account password to reset your PIN.",
+    "passwordPlaceholder": "Account password",
+    "verifyButton": "Verify",
+    "newPinTitle": "Set new PIN",
+    "newPinPlaceholder": "New PIN (min 4 digits)",
+    "confirmPinPlaceholder": "Confirm new PIN",
+    "resetButton": "Reset PIN",
+    "verificationFailedAlertTitle": "Verification Failed",
+    "verificationFailedAlertBody": "Incorrect password. Please try again.",
+    "pinMismatchAlertTitle": "PINs Do Not Match",
+    "pinMismatchAlertBody": "Please make sure both PINs are the same.",
+    "pinUpdatedAlertTitle": "PIN Updated",
+    "pinUpdatedAlertBody": "Your PIN has been reset successfully."
+  },
+  "consentPromptModal": {
+    "title": "Enable AI Interpretation",
+    "body": "To interpret your dreams and illustrate them, Morpheo sends your dream text to two AI providers: Anthropic (Claude) and Black Forest Labs (FLUX). Your dreams are never used to train AI models. Interpretations are symbolic, not clinical advice.",
+    "grantButton": "Grant Consent",
+    "grantButtonLoading": "Granting...",
+    "dismissButton": "Not Now"
   },
   "settings": {
     "title": "Settings",
@@ -368,7 +460,9 @@
     "permissionDeniedTitle": "Permission required",
     "permissionDeniedBody": "Please enable notifications in your device settings.",
     "saveErrorTitle": "Could not save",
-    "saveErrorBody": "Your reminder settings were not saved. Please try again."
+    "saveErrorBody": "Your reminder settings were not saved. Please try again.",
+    "reminderNotificationTitle": "Remember your dreams?",
+    "reminderNotificationBody": "Log a dream before the details fade."
   },
   "settingsPrivacy": {
     "title": "AI data consent",

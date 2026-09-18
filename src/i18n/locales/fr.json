@@ -9,7 +9,8 @@
     "back": "Retour",
     "loading": "Chargement…",
     "premium": "Premium",
-    "scrollToTop": "Remonter en haut"
+    "scrollToTop": "Remonter en haut",
+    "ok": "OK"
   },
   "splash": {
     "tagline": "Journal de rêves",
@@ -204,6 +205,7 @@
     "title": "Nouveau rêve",
     "editTitle": "Modifier le rêve",
     "placeholder": "Racontez votre rêve…",
+    "descriptionA11yLabel": "Description du rêve",
     "saveError": "Impossible d'enregistrer le rêve.",
     "recording": "Enregistrement",
     "micStart": "Démarrer la dictée vocale",
@@ -290,7 +292,97 @@
   },
   "onboardingConsent": {
     "privacyPolicyLink": "Politique de confidentialité",
-    "termsOfServiceLink": "Conditions d'utilisation"
+    "termsOfServiceLink": "Conditions d'utilisation",
+    "title": "Une note rapide sur la confidentialité",
+    "intro": "Pour interpréter vos rêves, Morpheo envoie la description de votre rêve à Anthropic (Claude). Pour les illustrer, il envoie une courte description visuelle du rêve à Black Forest Labs (FLUX).",
+    "bulletEncrypted": "• Le texte de votre rêve est envoyé de façon sécurisée et chiffré en transit, et votre journal de rêves est chiffré au repos sur cet appareil.",
+    "neverTrainedPrefix": "• Vos rêves ne sont ",
+    "neverTrainedBold": "jamais utilisés pour entraîner des modèles d'IA",
+    "neverTrainedSuffix": ".",
+    "bulletAdvice": "• Les interprétations sont symboliques et culturelles — pas des conseils cliniques ou thérapeutiques.",
+    "bulletRevoke": "• Vous pouvez révoquer votre consentement à tout moment dans les Paramètres.",
+    "agreeButton": "J'accepte",
+    "noThanksButton": "Non merci",
+    "errorTitle": "Erreur",
+    "saveErrorBody": "Impossible d'enregistrer votre consentement. Veuillez réessayer ou contacter le support.",
+    "genericErrorBody": "Une erreur est survenue. Veuillez réessayer.",
+    "requiredAlertTitle": "Consentement requis",
+    "requiredAlertBody": "Morpheo a besoin de votre consentement pour envoyer les descriptions de vos rêves à un fournisseur d'IA pour interprétation. Sans cela, l'application ne peut pas analyser vos rêves.\n\nVos rêves sont traités de façon sécurisée et ne sont jamais utilisés pour entraîner des modèles d'IA."
+  },
+  "onboardingWelcome": {
+    "tagline": "Percez le sens de vos rêves grâce à l'interprétation symbolique — pas une thérapie.",
+    "getStarted": "Commencer"
+  },
+  "signIn": {
+    "title": "Content de vous revoir",
+    "emailPlaceholder": "E-mail",
+    "passwordPlaceholder": "Mot de passe",
+    "submitButton": "Se connecter",
+    "submitButtonLoading": "Connexion en cours...",
+    "googleButton": "Continuer avec Google",
+    "appleButton": "Continuer avec Apple",
+    "createAccountLink": "Pas encore de compte ? Créez-en un",
+    "genericError": "La connexion a échoué. Veuillez réessayer.",
+    "googleError": "La connexion avec Google a échoué.",
+    "appleError": "La connexion avec Apple a échoué."
+  },
+  "signUp": {
+    "title": "Créez votre compte",
+    "emailPlaceholder": "E-mail",
+    "passwordPlaceholder": "Mot de passe (min. 8 caractères)",
+    "confirmPasswordPlaceholder": "Confirmer le mot de passe",
+    "submitButton": "Créer un compte",
+    "submitButtonLoading": "Création du compte...",
+    "passwordMismatchError": "Les mots de passe ne correspondent pas.",
+    "passwordTooShortError": "Le mot de passe doit contenir au moins 8 caractères.",
+    "genericError": "La création du compte a échoué."
+  },
+  "lock": {
+    "title": "Déverrouiller Morpheo",
+    "biometricPrompt": "Déverrouillez votre journal de rêves",
+    "pinPlaceholder": "Saisir le code",
+    "pinA11yLabel": "Saisir le code",
+    "unlockButton": "Déverrouiller",
+    "biometricLink": "Utiliser Face ID / Touch ID",
+    "forgotPinLink": "Code oublié ?",
+    "incorrectPinError": "Code incorrect. Veuillez réessayer."
+  },
+  "lockSetup": {
+    "title": "Protégez votre journal de rêves",
+    "subtitleWithBiometric": "Définissez un code de secours pour Face ID / Touch ID. Votre journal se verrouille chaque fois que vous quittez l'application.",
+    "subtitleWithoutBiometric": "Créez un code pour protéger votre journal de rêves. Votre journal se verrouille chaque fois que vous quittez l'application.",
+    "createPinPlaceholder": "Créer un code (min. 4 chiffres)",
+    "createPinA11yLabel": "Créer un code",
+    "confirmPinPlaceholder": "Confirmer le code",
+    "confirmPinA11yLabel": "Confirmer le code",
+    "submitButton": "Activer la protection",
+    "pinTooShortAlertTitle": "Code trop court",
+    "pinTooShortAlertBody": "Veuillez saisir au moins 4 chiffres.",
+    "pinMismatchAlertTitle": "Les codes ne correspondent pas",
+    "pinMismatchAlertBody": "Veuillez vous assurer que les deux codes sont identiques."
+  },
+  "forgotPin": {
+    "verifyTitle": "Vérifiez votre identité",
+    "verifySubtitle": "Saisissez le mot de passe de votre compte pour réinitialiser votre code.",
+    "passwordPlaceholder": "Mot de passe du compte",
+    "verifyButton": "Vérifier",
+    "newPinTitle": "Définir un nouveau code",
+    "newPinPlaceholder": "Nouveau code (min. 4 chiffres)",
+    "confirmPinPlaceholder": "Confirmer le nouveau code",
+    "resetButton": "Réinitialiser le code",
+    "verificationFailedAlertTitle": "Vérification échouée",
+    "verificationFailedAlertBody": "Mot de passe incorrect. Veuillez réessayer.",
+    "pinMismatchAlertTitle": "Les codes ne correspondent pas",
+    "pinMismatchAlertBody": "Veuillez vous assurer que les deux codes sont identiques.",
+    "pinUpdatedAlertTitle": "Code mis à jour",
+    "pinUpdatedAlertBody": "Votre code a été réinitialisé avec succès."
+  },
+  "consentPromptModal": {
+    "title": "Activer l'interprétation par IA",
+    "body": "Pour interpréter vos rêves et les illustrer, Morpheo envoie le texte de votre rêve à deux fournisseurs d'IA : Anthropic (Claude) et Black Forest Labs (FLUX). Vos rêves ne sont jamais utilisés pour entraîner des modèles d'IA. Les interprétations sont symboliques, pas des conseils cliniques.",
+    "grantButton": "Accorder le consentement",
+    "grantButtonLoading": "Autorisation en cours...",
+    "dismissButton": "Pas maintenant"
   },
   "settings": {
     "title": "Paramètres",
@@ -368,7 +460,9 @@
     "permissionDeniedTitle": "Autorisation requise",
     "permissionDeniedBody": "Veuillez activer les notifications dans les réglages de votre appareil.",
     "saveErrorTitle": "Échec de l'enregistrement",
-    "saveErrorBody": "Vos réglages de rappel n'ont pas été enregistrés. Veuillez réessayer."
+    "saveErrorBody": "Vos réglages de rappel n'ont pas été enregistrés. Veuillez réessayer.",
+    "reminderNotificationTitle": "Un rêve à noter ?",
+    "reminderNotificationBody": "Notez votre rêve avant que les détails ne s'estompent."
   },
   "settingsPrivacy": {
     "title": "Consentement IA",

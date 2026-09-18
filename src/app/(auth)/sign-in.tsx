@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { ErrorState } from '@shared/components/ErrorState';
 import { useServices } from '@services/useServices';
@@ -15,6 +16,7 @@ import { colors, fontSize, spacing } from '@theme/tokens';
 
 export default function SignInScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { auth } = useServices();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +30,7 @@ export default function SignInScreen() {
       await auth.signInWithEmail(email, password);
       router.replace('/(main)/journal');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Sign in failed. Please try again.');
+      setError(e instanceof Error ? e.message : t('signIn.genericError'));
     } finally {
       setLoading(false);
     }
@@ -41,7 +43,7 @@ export default function SignInScreen() {
       await auth.signInWithGoogle();
       router.replace('/(main)/journal');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Google sign-in failed.');
+      setError(e instanceof Error ? e.message : t('signIn.googleError'));
     } finally {
       setLoading(false);
     }
@@ -54,7 +56,7 @@ export default function SignInScreen() {
       await auth.signInWithApple();
       router.replace('/(main)/journal');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Apple sign-in failed.');
+      setError(e instanceof Error ? e.message : t('signIn.appleError'));
     } finally {
       setLoading(false);
     }
@@ -65,11 +67,11 @@ export default function SignInScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Text style={styles.title}>Welcome back</Text>
+      <Text style={styles.title}>{t('signIn.title')}</Text>
       {error ? <ErrorState message={error} /> : null}
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={t('signIn.emailPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={email}
         onChangeText={setEmail}
@@ -79,7 +81,7 @@ export default function SignInScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password"
+        placeholder={t('signIn.passwordPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={password}
         onChangeText={setPassword}
@@ -87,14 +89,14 @@ export default function SignInScreen() {
         autoComplete="current-password"
       />
       <Button
-        label={loading ? 'Signing in...' : 'Sign In'}
+        label={loading ? t('signIn.submitButtonLoading') : t('signIn.submitButton')}
         onPress={() => {
           void handleSignIn();
         }}
         disabled={loading || !email || !password}
       />
       <Button
-        label="Continue with Google"
+        label={t('signIn.googleButton')}
         variant="secondary"
         onPress={() => {
           void handleGoogle();
@@ -102,7 +104,7 @@ export default function SignInScreen() {
         disabled={loading}
       />
       <Button
-        label="Continue with Apple"
+        label={t('signIn.appleButton')}
         variant="secondary"
         onPress={() => {
           void handleApple();
@@ -110,7 +112,7 @@ export default function SignInScreen() {
         disabled={loading}
       />
       <TouchableOpacity onPress={() => router.push('/(auth)/sign-up')}>
-        <Text style={styles.link}>Don&apos;t have an account? Create one</Text>
+        <Text style={styles.link}>{t('signIn.createAccountLink')}</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
   );

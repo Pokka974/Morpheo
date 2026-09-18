@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ClarityDots } from '@shared/components/ClarityDots';
 import { Chip, ChipRow } from '@shared/components/Chip';
+import { emotionLabel } from '@shared/emotionLabel';
 import type { Tone } from '@features/dream-log/dreamMetadata';
 import {
   colors,
@@ -150,7 +151,7 @@ export function DreamCard({ entry, variant = 'full', onPress }: DreamCardProps) 
             {title}
           </Text>
           {entry.emotions?.[0] ? (
-            <Chip label={entry.emotions[0]} style={styles.compactChip} />
+            <Chip label={emotionLabel(t, entry.emotions[0])} style={styles.compactChip} />
           ) : null}
         </View>
         {!isPending && entry.clarity ? (
@@ -234,7 +235,7 @@ export function DreamCard({ entry, variant = 'full', onPress }: DreamCardProps) 
             {entry.emotions?.length ? (
               <ChipRow style={styles.signalsChips}>
                 {entry.emotions.slice(0, 3).map(emotion => (
-                  <Chip key={emotion} label={emotion} />
+                  <Chip key={emotion} label={emotionLabel(t, emotion)} />
                 ))}
               </ChipRow>
             ) : (

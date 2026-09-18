@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { ErrorState } from '@shared/components/ErrorState';
 import { useServices } from '@services/useServices';
@@ -8,6 +9,7 @@ import { colors, fontSize, spacing } from '@theme/tokens';
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { auth } = useServices();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,11 +20,11 @@ export default function SignUpScreen() {
   const handleSignUp = async () => {
     setError(null);
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError(t('signUp.passwordMismatchError'));
       return;
     }
     if (password.length < 8) {
-      setError('Password must be at least 8 characters.');
+      setError(t('signUp.passwordTooShortError'));
       return;
     }
     setLoading(true);
@@ -30,7 +32,7 @@ export default function SignUpScreen() {
       await auth.signUp(email, password);
       router.replace('/(main)/journal');
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Account creation failed.');
+      setError(e instanceof Error ? e.message : t('signUp.genericError'));
     } finally {
       setLoading(false);
     }
@@ -41,11 +43,11 @@ export default function SignUpScreen() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Text style={styles.title}>Create your account</Text>
+      <Text style={styles.title}>{t('signUp.title')}</Text>
       {error ? <ErrorState message={error} /> : null}
       <TextInput
         style={styles.input}
-        placeholder="Email"
+        placeholder={t('signUp.emailPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={email}
         onChangeText={setEmail}
@@ -55,7 +57,7 @@ export default function SignUpScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Password (min 8 characters)"
+        placeholder={t('signUp.passwordPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={password}
         onChangeText={setPassword}
@@ -64,7 +66,7 @@ export default function SignUpScreen() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirm password"
+        placeholder={t('signUp.confirmPasswordPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={confirmPassword}
         onChangeText={setConfirmPassword}
@@ -72,7 +74,7 @@ export default function SignUpScreen() {
         autoComplete="new-password"
       />
       <Button
-        label={loading ? 'Creating account...' : 'Create Account'}
+        label={loading ? t('signUp.submitButtonLoading') : t('signUp.submitButton')}
         onPress={() => {
           void handleSignUp();
         }}

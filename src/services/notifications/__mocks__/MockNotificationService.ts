@@ -12,7 +12,12 @@ export class MockNotificationService implements NotificationService {
     return this.permissionGranted;
   }
 
-  async scheduleReminder(_hour: number, _minute: number): Promise<void> {}
+  async scheduleReminder(
+    _hour: number,
+    _minute: number,
+    _title: string,
+    _body: string
+  ): Promise<void> {}
 
   async cancelReminder(): Promise<void> {}
 

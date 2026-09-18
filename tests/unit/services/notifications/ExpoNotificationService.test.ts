@@ -73,11 +73,20 @@ describe('ExpoNotificationService', () => {
   describe('scheduleReminder', () => {
     it('cancels existing and schedules new daily reminder', async () => {
       mockSchedule.mockResolvedValue('identifier');
-      await service.scheduleReminder(8, 0);
+      await service.scheduleReminder(
+        8,
+        0,
+        'Remember your dreams?',
+        'Log a dream before the details fade.'
+      );
       expect(mockCancel).toHaveBeenCalledWith('morpheo-daily-reminder');
       expect(mockSchedule).toHaveBeenCalledWith(
         expect.objectContaining({
           identifier: 'morpheo-daily-reminder',
+          content: expect.objectContaining({
+            title: 'Remember your dreams?',
+            body: 'Log a dream before the details fade.',
+          }),
           trigger: expect.objectContaining({ hour: 8, minute: 0 }),
         })
       );
