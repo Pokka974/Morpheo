@@ -27,6 +27,14 @@ export function InterpretationResultView({ result }: Props) {
         <Text style={styles.reading}>{result.overallReading}</Text>
       </View>
 
+      {result.subconsciousMechanism ? (
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('dream.mechanismLabel')}</Text>
+          <Text style={styles.mechanismName}>{result.subconsciousMechanism.label}</Text>
+          <Text style={styles.reading}>{result.subconsciousMechanism.explanation}</Text>
+        </View>
+      ) : null}
+
       {result.keywords.length > 0 ? (
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('dream.symbols')}</Text>
@@ -103,6 +111,9 @@ const styles = StyleSheet.create({
   },
   reading: {
     ...typography.interpretationBody,
+  },
+  mechanismName: {
+    ...typography.cardTitle,
   },
   accordionItem: {
     padding: spacing.md,

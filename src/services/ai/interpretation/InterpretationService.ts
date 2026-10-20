@@ -4,6 +4,12 @@ export interface CulturalReference {
   meaning: string;
 }
 
+/** The psychological function a dream appears to perform — see prompt 2.4.0. */
+export interface SubconsciousMechanism {
+  label: string;
+  explanation: string;
+}
+
 export interface InterpretationResult {
   id: string;
   dreamId: string;
@@ -28,6 +34,8 @@ export interface InterpretationResult {
    * prompt version 2.0.0 — those fall back to a template built from description + keywords.
    */
   imagePrompt: string | null;
+  /** Null for interpretations produced before prompt version 2.4.0. */
+  subconsciousMechanism: SubconsciousMechanism | null;
 }
 
 /** Dream metadata passed through so the Edge Function's reading — tone, archetype,

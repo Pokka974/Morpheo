@@ -28,6 +28,10 @@ const SUCCESS_RESULT: InterpretationResult = {
   archetype: 'The Seeker',
   themes: ['transformation', 'threshold'],
   symbolicDensity: 3,
+  subconsciousMechanism: {
+    label: 'Compensation',
+    explanation: 'The dream restores a calm your waking effort has been crowding out.',
+  },
   imagePrompt:
     'A moonlit staircase spiralling into still water, seen from below, deep indigo shadow and one amber lamp.',
 };
