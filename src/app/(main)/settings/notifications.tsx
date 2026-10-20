@@ -58,7 +58,12 @@ export default function NotificationsScreen() {
         );
         return;
       }
-      await notifications.scheduleReminder(reminderTime.getHours(), reminderTime.getMinutes());
+      await notifications.scheduleReminder(
+        reminderTime.getHours(),
+        reminderTime.getMinutes(),
+        t('settingsNotifications.reminderNotificationTitle'),
+        t('settingsNotifications.reminderNotificationBody')
+      );
     } else {
       await notifications.cancelReminder();
     }
@@ -70,7 +75,12 @@ export default function NotificationsScreen() {
     if (!date) return;
     setReminderTime(date);
     if (enabled) {
-      await notifications.scheduleReminder(date.getHours(), date.getMinutes());
+      await notifications.scheduleReminder(
+        date.getHours(),
+        date.getMinutes(),
+        t('settingsNotifications.reminderNotificationTitle'),
+        t('settingsNotifications.reminderNotificationBody')
+      );
     }
     await persistPreferences(enabled, date);
   };

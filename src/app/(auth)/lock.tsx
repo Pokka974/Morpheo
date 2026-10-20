@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { useServices } from '@services/useServices';
 import { colors, fontSize, spacing } from '@theme/tokens';
 
 export default function LockScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { localLock } = useServices();
   const [pin, setPin] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +18,7 @@ export default function LockScreen() {
   }, []);
 
   const attemptBiometric = async () => {
-    const success = await localLock.authenticate('Unlock your dream journal');
+    const success = await localLock.authenticate(t('lock.biometricPrompt'));
     if (success) {
       router.replace('/(main)/journal');
     }
@@ -28,7 +30,7 @@ export default function LockScreen() {
     if (success) {
       router.replace('/(main)/journal');
     } else {
-      setError('Incorrect PIN. Please try again.');
+      setError(t('lock.incorrectPinError'));
       setPin('');
     }
   };
@@ -36,21 +38,21 @@ export default function LockScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.logo}>🌙</Text>
-      <Text style={styles.title}>Unlock Morpheo</Text>
+      <Text style={styles.title}>{t('lock.title')}</Text>
       <TextInput
         style={styles.input}
-        placeholder="Enter PIN"
+        placeholder={t('lock.pinPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={pin}
         onChangeText={setPin}
         keyboardType="number-pad"
         secureTextEntry
         maxLength={8}
-        accessibilityLabel="Enter PIN"
+        accessibilityLabel={t('lock.pinA11yLabel')}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
       <Button
-        label="Unlock"
+        label={t('lock.unlockButton')}
         onPress={() => {
           void handlePinSubmit();
         }}
@@ -61,10 +63,10 @@ export default function LockScreen() {
           void attemptBiometric();
         }}
       >
-        <Text style={styles.biometricLink}>Use Face ID / Touch ID</Text>
+        <Text style={styles.biometricLink}>{t('lock.biometricLink')}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => router.push('/(auth)/forgot-pin')}>
-        <Text style={styles.forgotLink}>Forgot PIN?</Text>
+        <Text style={styles.forgotLink}>{t('lock.forgotPinLink')}</Text>
       </TouchableOpacity>
     </View>
   );

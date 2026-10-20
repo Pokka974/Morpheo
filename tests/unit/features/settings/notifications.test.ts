@@ -42,7 +42,12 @@ describe('Notification settings (unit)', () => {
 
   it('enabling notifications schedules a daily trigger at the specified time', async () => {
     mockGetPermissions.mockResolvedValue({ status: 'granted' });
-    await service.scheduleReminder(8, 30);
+    await service.scheduleReminder(
+      8,
+      30,
+      'Remember your dreams?',
+      'Log a dream before the details fade.'
+    );
     expect(mockSchedule).toHaveBeenCalledWith(
       expect.objectContaining({
         trigger: expect.objectContaining({ hour: 8, minute: 30 }),
@@ -70,8 +75,18 @@ describe('Notification settings (unit)', () => {
 
   it('rescheduling updates the daily trigger time', async () => {
     mockGetPermissions.mockResolvedValue({ status: 'granted' });
-    await service.scheduleReminder(8, 0);
-    await service.scheduleReminder(9, 15);
+    await service.scheduleReminder(
+      8,
+      0,
+      'Remember your dreams?',
+      'Log a dream before the details fade.'
+    );
+    await service.scheduleReminder(
+      9,
+      15,
+      'Remember your dreams?',
+      'Log a dream before the details fade.'
+    );
     expect(mockCancel).toHaveBeenCalledTimes(2);
     expect(mockSchedule.mock.calls[1][0].trigger.hour).toBe(9);
     expect(mockSchedule.mock.calls[1][0].trigger.minute).toBe(15);

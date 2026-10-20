@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, View, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { supabase } from '../../supabase/client';
 import { useServices } from '@services/useServices';
@@ -8,6 +9,7 @@ import { colors, fontSize, spacing } from '@theme/tokens';
 
 export default function ForgotPinScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { localLock: lockService } = useServices();
   const [password, setPassword] = useState('');
   const [newPin, setNewPin] = useState('');
@@ -26,7 +28,10 @@ export default function ForgotPinScreen() {
       if (error) throw error;
       setStep('reset');
     } catch {
-      Alert.alert('Verification Failed', 'Incorrect password. Please try again.');
+      Alert.alert(
+        t('forgotPin.verificationFailedAlertTitle'),
+        t('forgotPin.verificationFailedAlertBody')
+      );
     } finally {
       setLoading(false);
     }
@@ -34,14 +39,14 @@ export default function ForgotPinScreen() {
 
   const handleResetPin = async () => {
     if (newPin !== confirmPin) {
-      Alert.alert('PINs Do Not Match', 'Please make sure both PINs are the same.');
+      Alert.alert(t('forgotPin.pinMismatchAlertTitle'), t('forgotPin.pinMismatchAlertBody'));
       return;
     }
     setLoading(true);
     try {
       await lockService.setupPin(newPin);
-      Alert.alert('PIN Updated', 'Your PIN has been reset successfully.', [
-        { text: 'OK', onPress: () => router.back() },
+      Alert.alert(t('forgotPin.pinUpdatedAlertTitle'), t('forgotPin.pinUpdatedAlertBody'), [
+        { text: t('common.ok'), onPress: () => router.back() },
       ]);
     } finally {
       setLoading(false);
@@ -52,11 +57,11 @@ export default function ForgotPinScreen() {
     <View style={styles.container}>
       {step === 'verify' ? (
         <>
-          <Text style={styles.title}>Verify your identity</Text>
-          <Text style={styles.subtitle}>Enter your account password to reset your PIN.</Text>
+          <Text style={styles.title}>{t('forgotPin.verifyTitle')}</Text>
+          <Text style={styles.subtitle}>{t('forgotPin.verifySubtitle')}</Text>
           <TextInput
             style={styles.input}
-            placeholder="Account password"
+            placeholder={t('forgotPin.passwordPlaceholder')}
             placeholderTextColor={colors.textMuted}
             value={password}
             onChangeText={setPassword}
@@ -64,7 +69,7 @@ export default function ForgotPinScreen() {
             autoCapitalize="none"
           />
           <Button
-            label="Verify"
+            label={t('forgotPin.verifyButton')}
             onPress={() => {
               void handleVerifyPassword();
             }}
@@ -73,10 +78,10 @@ export default function ForgotPinScreen() {
         </>
       ) : (
         <>
-          <Text style={styles.title}>Set new PIN</Text>
+          <Text style={styles.title}>{t('forgotPin.newPinTitle')}</Text>
           <TextInput
             style={styles.input}
-            placeholder="New PIN (min 4 digits)"
+            placeholder={t('forgotPin.newPinPlaceholder')}
             placeholderTextColor={colors.textMuted}
             value={newPin}
             onChangeText={setNewPin}
@@ -86,7 +91,7 @@ export default function ForgotPinScreen() {
           />
           <TextInput
             style={styles.input}
-            placeholder="Confirm new PIN"
+            placeholder={t('forgotPin.confirmPinPlaceholder')}
             placeholderTextColor={colors.textMuted}
             value={confirmPin}
             onChangeText={setConfirmPin}
@@ -95,7 +100,7 @@ export default function ForgotPinScreen() {
             maxLength={8}
           />
           <Button
-            label="Reset PIN"
+            label={t('forgotPin.resetButton')}
             onPress={() => {
               void handleResetPin();
             }}

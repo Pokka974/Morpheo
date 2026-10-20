@@ -235,6 +235,9 @@ export default function InsightsScreen() {
           <View style={styles.surfacePanel}>
             <Text style={styles.panelTitle}>{t('insights.topEmotions')}</Text>
             <ChipRow>
+              {/* Free text from Claude, already written in the dream's language by the
+                  interpretation prompt — not the closed emotionColors vocabulary, so no
+                  locale key to look up. Rendered raw, same as keywords elsewhere. */}
               {emotions.map(e => (
                 <Chip key={e.id} label={e.term} />
               ))}

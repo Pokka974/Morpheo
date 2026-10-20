@@ -81,5 +81,114 @@ module.exports = {
         'react/display-name': 'off',
       },
     },
+    {
+      // i18n enforcement (issue #62): every user-facing string in a screen or feature
+      // component must go through t() and land in src/i18n/locales/{en,fr}.json — a
+      // literal here has no key, so tests/unit/i18n/locales.test.ts (which only checks
+      // parity *between* the two locale files) can never catch it.
+      //
+      // 'jsx-only' mode checks both JSX text children and JSX attribute values (e.g.
+      // placeholder, accessibilityLabel) but leaves plain code strings alone — route
+      // paths, object keys, SVG presentation attrs. The jsx-attributes/callees excludes
+      // below were derived by running this rule against the existing (translated)
+      // codebase and allow-listing every false positive it surfaced (testID, SVG props,
+      // router.push/replace/navigate); a fresh false positive should be added here with
+      // the same reasoning, not silenced with a blanket disable.
+      //
+      // Alert.alert()'s arguments sit in a handler function, not the JSX tree, so
+      // 'jsx-only' can't see them — no-restricted-syntax below targets that call
+      // directly, since every Alert.alert() in this codebase is user-facing.
+      files: ['src/app/**/*.tsx', 'src/features/**/*.tsx'],
+      plugins: ['i18next'],
+      rules: {
+        'i18next/no-literal-string': [
+          'error',
+          {
+            mode: 'jsx-only',
+            'jsx-attributes': {
+              exclude: [
+                'className',
+                'styleName',
+                'style',
+                'type',
+                'key',
+                'id',
+                'width',
+                'height',
+                'testID',
+                'href',
+                'name',
+                'fill',
+                'stroke',
+                'strokeDasharray',
+                'strokeWidth',
+                'strokeLinecap',
+                'strokeLinejoin',
+                'viewBox',
+                'd',
+                'points',
+                'cx',
+                'cy',
+                'r',
+                'rx',
+                'ry',
+                'x',
+                'y',
+                'x1',
+                'y1',
+                'x2',
+                'y2',
+                'transform',
+                'offset',
+                'stopColor',
+                'gradientUnits',
+                'patternUnits',
+                'clipPath',
+                'clipRule',
+                'fillRule',
+              ],
+            },
+            callees: {
+              exclude: [
+                'i18n(ext)?',
+                't',
+                'require',
+                'addEventListener',
+                'removeEventListener',
+                'postMessage',
+                'getElementById',
+                'dispatch',
+                'commit',
+                'includes',
+                'indexOf',
+                'endsWith',
+                'startsWith',
+                'push',
+                'replace',
+                'navigate',
+              ],
+            },
+            words: {
+              exclude: [
+                '[0-9!-/:-@[-`{-~]+',
+                '[A-Z_-]+',
+                require('eslint-plugin-i18next/lib/options/htmlEntities'),
+                /^\p{Emoji}+$/u,
+                // Expand/collapse glyphs (InterpretationResultView) — not copy to translate.
+                /^[▲▼]+$/,
+              ],
+            },
+          },
+        ],
+        'no-restricted-syntax': [
+          'error',
+          {
+            selector:
+              "CallExpression[callee.object.name='Alert'][callee.property.name='alert'] > Literal.arguments",
+            message: 'Alert.alert() text must go through t() — add a key to src/i18n/locales/{en,fr}.json.',
+          },
+        ],
+      },
+    },
   ],
 };

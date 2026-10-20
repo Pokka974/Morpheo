@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@shared/components/Button';
 import { supabase } from '../../supabase/client';
 import { colors, fontSize, spacing } from '@theme/tokens';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function ConsentPromptModal({ visible, onGranted, onDismiss }: Props) {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
 
   const handleGrant = async () => {
@@ -41,20 +43,24 @@ export function ConsentPromptModal({ visible, onGranted, onDismiss }: Props) {
     <Modal visible={visible} transparent animationType="fade" onRequestClose={onDismiss}>
       <View style={styles.overlay}>
         <View style={styles.card}>
-          <Text style={styles.title}>Enable AI Interpretation</Text>
-          <Text style={styles.body}>
-            To interpret your dreams and illustrate them, Morpheo sends your dream text to two AI
-            providers: Anthropic (Claude) and Black Forest Labs (FLUX). Your dreams are never used
-            to train AI models. Interpretations are symbolic, not clinical advice.
-          </Text>
+          <Text style={styles.title}>{t('consentPromptModal.title')}</Text>
+          <Text style={styles.body}>{t('consentPromptModal.body')}</Text>
           <Button
-            label={loading ? 'Granting...' : 'Grant Consent'}
+            label={
+              loading
+                ? t('consentPromptModal.grantButtonLoading')
+                : t('consentPromptModal.grantButton')
+            }
             onPress={() => {
               void handleGrant();
             }}
             disabled={loading}
           />
-          <Button label="Not Now" variant="ghost" onPress={onDismiss} />
+          <Button
+            label={t('consentPromptModal.dismissButton')}
+            variant="ghost"
+            onPress={onDismiss}
+          />
         </View>
       </View>
     </Modal>

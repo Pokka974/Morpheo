@@ -42,6 +42,9 @@ export function InterpretationResultView({ result }: Props) {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{t('dream.emotions')}</Text>
           <ChipRow>
+            {/* Free text from Claude, already written in the dream's language by the
+                interpretation prompt — not the closed emotionColors vocabulary, so no
+                locale key to look up. Rendered raw, same as keywords above. */}
             {result.emotions.map(em => (
               <Chip key={em} label={em} />
             ))}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '@shared/components/Button';
 import { useServices } from '@services/useServices';
@@ -8,6 +9,7 @@ import { colors, fontSize, spacing } from '@theme/tokens';
 
 export default function OnboardingLockSetupScreen() {
   const router = useRouter();
+  const { t } = useTranslation();
   const { localLock: lockService } = useServices();
   const [pin, setPin] = useState('');
   const [confirmPin, setConfirmPin] = useState('');
@@ -22,11 +24,11 @@ export default function OnboardingLockSetupScreen() {
 
   const handleSetupPin = async () => {
     if (pin.length < 4) {
-      Alert.alert('PIN Too Short', 'Please enter at least 4 digits.');
+      Alert.alert(t('lockSetup.pinTooShortAlertTitle'), t('lockSetup.pinTooShortAlertBody'));
       return;
     }
     if (pin !== confirmPin) {
-      Alert.alert('PINs Do Not Match', 'Please make sure both PINs are the same.');
+      Alert.alert(t('lockSetup.pinMismatchAlertTitle'), t('lockSetup.pinMismatchAlertBody'));
       return;
     }
     setLoading(true);
@@ -41,36 +43,36 @@ export default function OnboardingLockSetupScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Protect your dream journal</Text>
+      <Text style={styles.title}>{t('lockSetup.title')}</Text>
       <Text style={styles.subtitle}>
         {biometricAvailable
-          ? 'Set a PIN as a backup to Face ID / Touch ID. Your journal is locked each time you leave the app.'
-          : 'Create a PIN to protect your dream journal. Your journal is locked each time you leave the app.'}
+          ? t('lockSetup.subtitleWithBiometric')
+          : t('lockSetup.subtitleWithoutBiometric')}
       </Text>
       <TextInput
         style={styles.input}
-        placeholder="Create PIN (min 4 digits)"
+        placeholder={t('lockSetup.createPinPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={pin}
         onChangeText={setPin}
         keyboardType="number-pad"
         secureTextEntry
         maxLength={8}
-        accessibilityLabel="Create PIN"
+        accessibilityLabel={t('lockSetup.createPinA11yLabel')}
       />
       <TextInput
         style={styles.input}
-        placeholder="Confirm PIN"
+        placeholder={t('lockSetup.confirmPinPlaceholder')}
         placeholderTextColor={colors.textMuted}
         value={confirmPin}
         onChangeText={setConfirmPin}
         keyboardType="number-pad"
         secureTextEntry
         maxLength={8}
-        accessibilityLabel="Confirm PIN"
+        accessibilityLabel={t('lockSetup.confirmPinA11yLabel')}
       />
       <Button
-        label="Set Up Protection"
+        label={t('lockSetup.submitButton')}
         onPress={() => {
           void handleSetupPin();
         }}

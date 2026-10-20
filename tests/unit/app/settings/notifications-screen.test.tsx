@@ -196,7 +196,9 @@ describe('NotificationsScreen', () => {
       UNSAFE_getByProps({ mode: 'time' }).props.onChange(undefined, newDate);
     });
 
-    await waitFor(() => expect(scheduleSpy).toHaveBeenCalledWith(9, 15));
+    await waitFor(() =>
+      expect(scheduleSpy).toHaveBeenCalledWith(9, 15, expect.any(String), expect.any(String))
+    );
     expect(mockUpdateEq).toHaveBeenCalled();
   });
 

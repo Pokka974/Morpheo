@@ -26,7 +26,7 @@ export default function OnboardingConsentScreen() {
 
         if (updateError) {
           console.error('Consent update failed:', updateError);
-          Alert.alert('Error', 'Could not save your consent. Please try again or contact support.');
+          Alert.alert(t('onboardingConsent.errorTitle'), t('onboardingConsent.saveErrorBody'));
           return;
         }
 
@@ -43,7 +43,7 @@ export default function OnboardingConsentScreen() {
       router.push('/(auth)/onboarding/lock-setup');
     } catch (e) {
       console.error('Consent screen error:', e);
-      Alert.alert('Error', 'Something went wrong. Please try again.');
+      Alert.alert(t('onboardingConsent.errorTitle'), t('onboardingConsent.genericErrorBody'));
     } finally {
       setLoading(false);
     }
@@ -51,32 +51,25 @@ export default function OnboardingConsentScreen() {
 
   const handleNoThanks = () => {
     Alert.alert(
-      'Consent Required',
-      'Morpheo needs your consent to send dream descriptions to an AI provider for interpretation. Without this, the app cannot analyze your dreams.\n\nYour dreams are processed securely and are never used to train AI models.',
-      [{ text: 'OK', style: 'default' }]
+      t('onboardingConsent.requiredAlertTitle'),
+      t('onboardingConsent.requiredAlertBody'),
+      [{ text: t('common.ok'), style: 'default' }]
     );
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>A quick note about privacy</Text>
+      <Text style={styles.title}>{t('onboardingConsent.title')}</Text>
       <View style={styles.card}>
+        <Text style={styles.bodyText}>{t('onboardingConsent.intro')}</Text>
+        <Text style={styles.bodyText}>{t('onboardingConsent.bulletEncrypted')}</Text>
         <Text style={styles.bodyText}>
-          To interpret your dreams, Morpheo sends your dream description to Anthropic (Claude). To
-          illustrate them, it sends a short visual description of the dream to Black Forest Labs
-          (FLUX).
+          {t('onboardingConsent.neverTrainedPrefix')}
+          <Text style={styles.bold}>{t('onboardingConsent.neverTrainedBold')}</Text>
+          {t('onboardingConsent.neverTrainedSuffix')}
         </Text>
-        <Text style={styles.bodyText}>
-          • Your dream text is sent securely and encrypted in transit, and your dream journal is
-          encrypted at rest on this device.
-        </Text>
-        <Text style={styles.bodyText}>
-          • Your dreams are <Text style={styles.bold}>never used to train AI models</Text>.
-        </Text>
-        <Text style={styles.bodyText}>
-          • Interpretations are symbolic and cultural — not clinical or therapeutic advice.
-        </Text>
-        <Text style={styles.bodyText}>• You can revoke consent at any time in Settings.</Text>
+        <Text style={styles.bodyText}>{t('onboardingConsent.bulletAdvice')}</Text>
+        <Text style={styles.bodyText}>{t('onboardingConsent.bulletRevoke')}</Text>
         <View style={styles.linksRow}>
           <Text
             style={styles.link}
@@ -98,13 +91,17 @@ export default function OnboardingConsentScreen() {
         </View>
       </View>
       <Button
-        label="I Agree"
+        label={t('onboardingConsent.agreeButton')}
         onPress={() => {
           void handleAgree();
         }}
         disabled={loading}
       />
-      <Button label="No Thanks" variant="ghost" onPress={handleNoThanks} />
+      <Button
+        label={t('onboardingConsent.noThanksButton')}
+        variant="ghost"
+        onPress={handleNoThanks}
+      />
     </View>
   );
 }
