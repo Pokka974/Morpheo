@@ -30,6 +30,10 @@ const VALID_INTERPRETATION_INPUT = {
   archetype: 'The Seeker',
   themes: ['guidance', 'solitude'],
   symbolic_density: 3,
+  subconscious_mechanism: {
+    label: 'Compensation',
+    explanation: 'The dream restores a calm waking effort crowds out.',
+  },
   image_prompt: 'A lighthouse over a calm ocean at dusk.',
 };
 

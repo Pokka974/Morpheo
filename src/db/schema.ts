@@ -77,6 +77,8 @@ export const interpretations = sqliteTable('interpretations', {
   symbolicDensity: integer('symbolic_density'),
   /** English text-to-image prompt the interpretation model wrote for this dream. */
   imagePrompt: text('image_prompt'),
+  /** JSON `{ label, explanation }` — the psychological function the dream appears to perform. */
+  subconsciousMechanism: text('subconscious_mechanism'),
 });
 
 export const media = sqliteTable('media', {

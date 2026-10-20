@@ -63,6 +63,7 @@ import {
 } from '@theme/tokens';
 import type {
   CulturalReference,
+  SubconsciousMechanism,
   InterpretationRequest,
   InterpretationResult,
 } from '@services/ai/interpretation/InterpretationService';
@@ -97,6 +98,18 @@ function parseStringArray(raw: string | null | undefined): string[] {
     return Array.isArray(parsed) ? parsed.filter((v): v is string => typeof v === 'string') : [];
   } catch {
     return [];
+  }
+}
+
+function parseMechanism(raw: string | null | undefined): SubconsciousMechanism | null {
+  if (!raw) return null;
+  try {
+    const parsed = JSON.parse(raw) as Partial<SubconsciousMechanism> | null;
+    return parsed && typeof parsed.label === 'string' && typeof parsed.explanation === 'string'
+      ? { label: parsed.label, explanation: parsed.explanation }
+      : null;
+  } catch {
+    return null;
   }
 }
 
@@ -219,8 +232,9 @@ export default function DreamDetailScreen() {
         themes: string | null;
         symbolic_density: number | null;
         image_prompt: string | null;
+        subconscious_mechanism: string | null;
       }>(
-        'SELECT id, overall_reading, keywords, emotions, cultural_references, confidence, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt FROM interpretations WHERE dream_id = ? ORDER BY created_at DESC LIMIT 1',
+        'SELECT id, overall_reading, keywords, emotions, cultural_references, confidence, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt, subconscious_mechanism FROM interpretations WHERE dream_id = ? ORDER BY created_at DESC LIMIT 1',
         dreamId
       );
       if (interpRow) {
@@ -243,6 +257,7 @@ export default function DreamDetailScreen() {
           themes: parseStringArray(interpRow.themes),
           symbolicDensity: interpRow.symbolic_density,
           imagePrompt: interpRow.image_prompt,
+          subconsciousMechanism: parseMechanism(interpRow.subconscious_mechanism),
         });
       }
 
@@ -467,7 +482,10 @@ export default function DreamDetailScreen() {
   // Pre-interpretation-016 rows carry no archetype/themes/density yet — hide the block
   // rather than render an empty dashed card for them.
   const hasAiMetadata = Boolean(
-    interpretation?.archetype || interpretation?.themes.length || interpretation?.symbolicDensity
+    interpretation?.archetype ||
+    interpretation?.themes.length ||
+    interpretation?.symbolicDensity ||
+    interpretation?.subconsciousMechanism
   );
 
   const monthlyThemeHeader = monthlyTheme
@@ -800,6 +818,18 @@ export default function DreamDetailScreen() {
                 <View style={styles.archetypeRow}>
                   <Text style={styles.archetypeName}>{interpretation.archetype}</Text>
                   <Text style={styles.archetypeCaption}>{t('dream.archetypeLabel')}</Text>
+                </View>
+              ) : null}
+
+              {interpretation?.subconsciousMechanism ? (
+                <View style={styles.mechanismBlock}>
+                  <Text style={styles.mechanismCaption}>{t('dream.mechanismLabel')}</Text>
+                  <Text style={styles.mechanismName}>
+                    {interpretation.subconsciousMechanism.label}
+                  </Text>
+                  <Text style={styles.mechanismExplanation}>
+                    {interpretation.subconsciousMechanism.explanation}
+                  </Text>
                 </View>
               ) : null}
 
@@ -1488,6 +1518,20 @@ const styles = StyleSheet.create({
     ...typography.overline,
     fontSize: 10.5,
     color: colors.accentText,
+  },
+  mechanismBlock: {
+    gap: spacing.xs,
+  },
+  mechanismCaption: {
+    ...typography.overline,
+    fontSize: 10.5,
+  },
+  mechanismName: {
+    ...typography.dreamTitle,
+    fontSize: 17,
+  },
+  mechanismExplanation: {
+    ...typography.interpretationBody,
   },
   archetypeRow: {
     flexDirection: 'row',

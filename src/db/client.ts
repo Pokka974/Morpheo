@@ -94,7 +94,8 @@ sqlite.execSync(`
     archetype TEXT,
     themes TEXT NOT NULL DEFAULT '[]',
     symbolic_density INTEGER,
-    image_prompt TEXT
+    image_prompt TEXT,
+    subconscious_mechanism TEXT
   );
 `);
 
@@ -191,6 +192,7 @@ const interpretationMetadataColumns: Array<[string, string]> = [
   ['themes', `TEXT NOT NULL DEFAULT '[]'`],
   ['symbolic_density', 'INTEGER'],
   ['image_prompt', 'TEXT'],
+  ['subconscious_mechanism', 'TEXT'],
 ];
 for (const [name, ddl] of interpretationMetadataColumns) {
   if (!interpretationsColumns.some(col => col.name === name)) {

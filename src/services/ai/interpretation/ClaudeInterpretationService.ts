@@ -4,6 +4,7 @@ import type {
   InterpretationService,
   InterpretationRequest,
   InterpretationResult,
+  SubconsciousMechanism,
 } from './InterpretationService';
 import {
   InterpretationLimitError,
@@ -67,6 +68,8 @@ export class ClaudeInterpretationService implements InterpretationService {
       themes: (row['themes'] as string[] | null) ?? [],
       symbolicDensity: (row['symbolic_density'] as number | null) ?? null,
       imagePrompt: (row['image_prompt'] as string | null) ?? null,
+      subconsciousMechanism:
+        (row['subconscious_mechanism'] as SubconsciousMechanism | null) ?? null,
     };
   }
 }

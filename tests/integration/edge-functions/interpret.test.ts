@@ -73,7 +73,13 @@ describe('interpret Edge Function tool contract', () => {
     expect(source).toContain('imagePrompt: interpretation.image_prompt,');
   });
 
-  it('leaves headroom for the nine-field tool payload', () => {
+  it('requires a subconscious_mechanism in the tool output, persists and returns it', () => {
+    expect(source).toContain("'subconscious_mechanism',");
+    expect(source).toContain('subconscious_mechanism: input.subconscious_mechanism,');
+    expect(source).toContain('subconsciousMechanism: interpretation.subconscious_mechanism,');
+  });
+
+  it('leaves headroom for the ten-field tool payload', () => {
     const maxTokens = /max_tokens:\s*(\d+)/.exec(source);
     expect(maxTokens).not.toBeNull();
     expect(Number(maxTokens![1])).toBeGreaterThanOrEqual(2048);

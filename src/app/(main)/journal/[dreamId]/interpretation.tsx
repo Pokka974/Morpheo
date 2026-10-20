@@ -186,7 +186,7 @@ export default function InterpretationScreen() {
   useEffect(() => {
     if (state.status !== 'success' && state.status !== 'degraded') return;
     const result = state.result;
-    // Defensive fallbacks: archetype/themes/symbolicDensity are only present once the
+    // Defensive fallbacks: archetype/themes/symbolicDensity/subconsciousMechanism are only present once the
     // interpret Edge Function has been deployed with the matching schema — an older
     // deployed version (or a rollback) still returns a result missing them entirely,
     // which should degrade gracefully rather than crash the save.
@@ -194,8 +194,8 @@ export default function InterpretationScreen() {
     void db
       .runAsync(
         `INSERT OR REPLACE INTO interpretations
-        (id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        (id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt, subconscious_mechanism)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           result.id,
           dreamId,
@@ -212,6 +212,7 @@ export default function InterpretationScreen() {
           JSON.stringify(themes),
           result.symbolicDensity ?? null,
           result.imagePrompt ?? null,
+          result.subconsciousMechanism ? JSON.stringify(result.subconsciousMechanism) : null,
         ]
       )
       .then(async () => {

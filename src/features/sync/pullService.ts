@@ -160,6 +160,7 @@ interface RemoteInterpretation {
   themes: string[] | null;
   symbolic_density: number | null;
   image_prompt: string | null;
+  subconscious_mechanism: { label: string; explanation: string } | null;
 }
 
 /** Shared between `pullDreams`'s incremental page query and `recoverMissingDream`'s
@@ -731,7 +732,7 @@ async function pullInterpretations(userId: string): Promise<void> {
     const { data, error } = await supabase
       .from('interpretations')
       .select(
-        'id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt'
+        'id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt, subconscious_mechanism'
       )
       .eq('user_id', userId)
       .gt('created_at', cursor)
@@ -758,8 +759,8 @@ async function pullInterpretations(userId: string): Promise<void> {
 
       await sqlite.runAsync(
         `INSERT OR IGNORE INTO interpretations
-          (id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          (id, dream_id, overall_reading, keywords, emotions, cultural_references, confidence, is_degraded, prompt_version, model_used, created_at, archetype, themes, symbolic_density, image_prompt, subconscious_mechanism)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           row.id,
           row.dream_id,
@@ -776,6 +777,7 @@ async function pullInterpretations(userId: string): Promise<void> {
           JSON.stringify(row.themes ?? []),
           row.symbolic_density,
           row.image_prompt,
+          row.subconscious_mechanism ? JSON.stringify(row.subconscious_mechanism) : null,
         ]
       );
 

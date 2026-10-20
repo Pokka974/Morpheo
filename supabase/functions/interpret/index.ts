@@ -37,7 +37,7 @@ const FORMAT_INTERPRETATION_TOOL: StrictTool = {
         description:
           'The interpretation itself: 5-6 sentences of flowing prose that name what the dream is ' +
           'doing, read the 2-3 heaviest symbols as they function *in this dream* specifically, and ' +
-          'close on what the dream appears to be surfacing for the dreamer. This is the product — ' +
+          'close on the subconscious mechanism the dream appears to be performing and what it is surfacing for the dreamer. This is the product — ' +
           'a short or generic reading is a failed one.',
       },
       keywords: {
@@ -96,6 +96,23 @@ const FORMAT_INTERPRETATION_TOOL: StrictTool = {
         description:
           'How symbolically dense/layered this dream is, 1 (literal, few symbols) to 4 (highly symbolic, many layered meanings).',
       },
+      subconscious_mechanism: {
+        type: 'object',
+        additionalProperties: false,
+        properties: {
+          label: { type: 'string' },
+          explanation: { type: 'string' },
+        },
+        required: ['label', 'explanation'],
+        description:
+          'The psychological function this dream appears to be performing — not a theme and not a ' +
+          'symbol. `label` is 1-4 words in title case naming the mechanism ("Anxiety rehearsal", ' +
+          '"Compensation", "Wish-fulfilment", "Unintegrated material surfacing", "Conflict ' +
+          'externalised as story"). `explanation` is one or two sentences saying why the ' +
+          "dreamer's own mind would have produced this dream tonight, grounded in what the dream " +
+          'actually contains. When the description is thin, name the best-supported mechanism and ' +
+          'phrase the explanation as a possibility; never invent events to support one.',
+      },
       image_prompt: {
         type: 'string',
         description:
@@ -111,6 +128,7 @@ const FORMAT_INTERPRETATION_TOOL: StrictTool = {
       'archetype',
       'themes',
       'symbolic_density',
+      'subconscious_mechanism',
       'image_prompt',
     ],
   },
@@ -361,6 +379,7 @@ serve(async (req: Request) => {
       archetype: string;
       themes: string[];
       symbolic_density: number;
+      subconscious_mechanism: { label: string; explanation: string };
       image_prompt: string;
     };
 
@@ -383,6 +402,7 @@ serve(async (req: Request) => {
         archetype: input.archetype,
         themes: input.themes,
         symbolic_density: input.symbolic_density,
+        subconscious_mechanism: input.subconscious_mechanism,
         image_prompt: input.image_prompt,
       })
       .select()
@@ -412,6 +432,7 @@ serve(async (req: Request) => {
         archetype: interpretation.archetype,
         themes: interpretation.themes,
         symbolicDensity: interpretation.symbolic_density,
+        subconsciousMechanism: interpretation.subconscious_mechanism,
         imagePrompt: interpretation.image_prompt,
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
